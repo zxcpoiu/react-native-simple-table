@@ -20,7 +20,8 @@ class Table extends Component {
     columns: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string.isRequired,
       dataIndex: PropTypes.string.isRequired,
-      width: PropTypes.number
+      width: PropTypes.number,
+      backgroundColor: PropTypes.obj,
     })).isRequired,
     columnWidth: PropTypes.number,
     height: PropTypes.number,
@@ -38,6 +39,9 @@ class Table extends Component {
 
   _renderCell(cellData, col) {
     let style = {width: col.width || this.props.columnWidth || DEFAULT_COLUMN_WIDTH};
+    if (col.backgroundColor && col.backgroundColor.cell) {
+      style.backgroundColor = col.backgroundColor.cell;
+    }
     return (
       <View key={col.dataIndex} style={[styles.cell, style]}>
         <Text>{cellData}</Text>
@@ -49,9 +53,12 @@ class Table extends Component {
     let { columns, columnWidth } = this.props;
     return columns.map((col, index) => {
       let style = {width: col.width || columnWidth || DEFAULT_COLUMN_WIDTH};
+      if (col.backgroundColor && col.backgroundColor.header) {
+        style.backgroundColor = col.backgroundColor.header;
+      }
       return (
         <View key={index} style={[styles.headerItem, style]}>
-          <Text>{col.title}</Text>
+          <Text style={{textAlign: 'center'}}>{col.title}</Text>
         </View>
       )
     })
