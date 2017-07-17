@@ -22,6 +22,7 @@ class Table extends Component {
       dataIndex: PropTypes.string.isRequired,
       width: PropTypes.number,
       backgroundColor: PropTypes.obj,
+      fontSize: PropTypes.obj,
     })).isRequired,
     columnWidth: PropTypes.number,
     height: PropTypes.number,
@@ -42,9 +43,13 @@ class Table extends Component {
     if (col.backgroundColor && col.backgroundColor.cell) {
       style.backgroundColor = col.backgroundColor.cell;
     }
+    let textStyle = {fontSize: 16};
+    if (col.fontSize && col.fontSize.cell) {
+        textStyle.fontSize = col.fontSize.cell;
+    }
     return (
       <View key={col.dataIndex} style={[styles.cell, style]}>
-        <Text>{cellData}</Text>
+        <Text style={textStyle}>{cellData}</Text>
       </View>
     )
   }
@@ -56,9 +61,13 @@ class Table extends Component {
       if (col.backgroundColor && col.backgroundColor.header) {
         style.backgroundColor = col.backgroundColor.header;
       }
+      let textStyle = {fontSize: 16};
+      if (col.fontSize && col.fontSize.header) {
+          textStyle.fontSize = col.fontSize.header;
+      }
       return (
         <View key={index} style={[styles.headerItem, style]}>
-          <Text style={{textAlign: 'center'}}>{col.title}</Text>
+          <Text style={[{textAlign: 'center'}, textStyle]}>{col.title}</Text>
         </View>
       )
     })
